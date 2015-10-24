@@ -4,7 +4,7 @@
         ""
     ],
     "companyName": "hi.imsean@yahoo.com",
-    "longName": "Test",
+    "longName": "We have a CMPE16 midterm on monday",
     "projectType": "pebblejs",
     "resources": {
         "media": [
@@ -32,7 +32,7 @@
         ]
     },
     "sdkVersion": "3",
-    "shortName": "Test",
+    "shortName": "Math",
     "targetPlatforms": [
         "aplite",
         "basalt"
