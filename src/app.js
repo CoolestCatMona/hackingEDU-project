@@ -6,7 +6,7 @@ var Vector2 = require('vector2');    //Default
 var Vibe = require('ui/vibe');
 var mathOperators = ['+', '-', '*']; //Math operators
 var losses = 0;                      //Tracks losses, game should end on 3 losses
-var lossString = '';
+var lossString = ' ';
 var correct = ['Yeah!',              //Different win messages
                'That is right!', 'Awesome!', 'Correct', '<(^-^<)', '^(^-^)^', '(>^-^)>', 'Well arent you good.'];  
 var incorrect = ['No',               //Different lose messages
@@ -85,7 +85,7 @@ var mainText = new UI.Text({
   position: new Vector2(50, 50),
   size: new Vector2(100, 100),
   font: 'bitham-30-black',
-  text: 'Cole is gey :^)',
+  text: 'Cole is gay :^)',
   textAlign: 'center'
 });
 //MAIN - todo
@@ -177,9 +177,7 @@ function random(min, max){
 }
 //Displays losses as strikes 'X'
 function lossToString(losses){
-  for(var i = 0; i < losses; i++){
-  lossString += 'X';
-  }
+  lossString = losses + '/3 Failures';
 }
 //returns an int in the range [min, max] excluding 0
 function randomNonZero(min, max){
@@ -296,9 +294,7 @@ function loadEQ(losses){
     splash.add(result);
     splash.add(lossText);
     splash.show();
-      wind.on('click', 'select', function(e) {
-        splash.hide();
-    });
+
   });
 
   //If user selects 2nd answer 'SELECT'
@@ -317,12 +313,11 @@ function loadEQ(losses){
       result.text(incorrect[random(0, incorrect.length-1)]);
     }
     //adds the result text to splash screen and shows splash screen
+    splash.add(sBG);
     splash.add(result);
     splash.add(lossText);
     splash.show();
-      wind.on('click', 'select', function(e) {
-        splash.hide();
-    });
+
   });
 
   //If user selects 3rd answer 'dOWN'
@@ -344,29 +339,29 @@ function loadEQ(losses){
     splash.add(result);
     splash.add(lossText);
     splash.show();
-      wind.on('click', 'select', function(e) {
-        splash.hide();
-    });
   });
   
-//   //SHOULD remove splash window when select is pressed
-//   wind.on('click', 'select', function(e) {
-//     splash.hide();
-//   });
+  //remove splash window when select is pressed
+  splash.on('click', 'select', function(e) {
+    splash.hide();
+  });
+  var lossTEST;
+  console.log('Loss number');
+  lossTEST = lossToString(losses);
+  console.log(lossTEST);
   
-  console.log('Losses...');
-  console.log(losses);
-  
-//   if(losses == 3){
-//   //go to gameover screen TBC
-//     gameOver.add(sBG);
-//     mainText.text('u lose lOL!!1');
-//     gameOver.add(mainText);
-//   }
-//   else {
-//     wind.hide();
-//     loadEQ(losses);
-//   }
+
+  if(losses != 3){
+    console.log('im looping, youre not crazy');
+    wind.hide();
+    loadEQ(losses);
+  }
+  else {
+    //go to gameover screen TBC
+    gameOver.add(sBG);
+    mainText.text('u lose lOL!!1');
+    gameOver.add(mainText);
+  }
   
 }
 
