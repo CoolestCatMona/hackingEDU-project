@@ -3,9 +3,12 @@
 
 var UI = require('ui');              //Default
 var Vector2 = require('vector2');    //Default
-var Vibe = require('ui/vibe');
+var Vibe = require('ui/vibe');       //Default
 var mathOperators = ['+', '-', '*']; //Math operators
+var Accel = require('ui/accel');     //Default
+Accel.init();                        //prepare the accelerometer
 var losses = 0;                      //Tracks losses, game should end on 3 losses
+var wins = 0;
 var lossString = ' ';
 var correct = ['Yeah!',              //Different win messages
                'That is right!', 'Awesome!', 'Correct', '<(^-^<)', '^(^-^)^', '(>^-^)>', 'Well arent you good.'];  
@@ -112,17 +115,25 @@ var wind = new UI.Window({
 var splash = new UI.Window({
   fullscreen: true,
   action: {
-    select: '',
+    select: 'images/action.png',
     backgroundColor: 'white'
     }
 });
-
-var lossText = new UI.Text({
-  position: new Vector2(0, 120),
-  size: new Vector2(100, 30),
-  font: 'gothic-24-bold',
+//Text containing game over text
+var gO = new UI.Text({
+  position: new Vector2(0, 0),
+  size: new Vector2(144, 168),
+  font: 'bitham-30-black',
   text: '',
   textAlign: 'center'
+});
+//Text containing game over text
+var lossText = new UI.Text({
+  position: new Vector2(0, 0),
+  size: new Vector2(0, 65),
+  font: 'gothic-24-bold',
+  text: '',
+  textAlign: 'left'
 });
 //Text for first answer
 var ansA = new UI.Text({
@@ -178,6 +189,7 @@ function random(min, max){
 //Displays losses as strikes 'X'
 function lossToString(losses){
   lossString = losses + '/3 Failures';
+  return lossString;
 }
 //returns an int in the range [min, max] excluding 0
 function randomNonZero(min, max){
@@ -251,7 +263,7 @@ function shuffle(array) {
 }
 
 //recursively loops program until 3 losses
-function loadEQ(losses){
+function loadEQ(losses, wins){
   //Generates a random equation
   equation = generateEquation();
   //Generates answers to equation above, stores in array
@@ -281,6 +293,7 @@ function loadEQ(losses){
       //sets result string from 'result' to a random congratulatory message
       result.text(correct[random(0, correct.length-1)]);
       sBG.backgroundColor('green');
+      wins++;
     }else{
       //sets result string from 'result' to a random failed message
       sBG.backgroundColor('red');
@@ -304,6 +317,7 @@ function loadEQ(losses){
       //sets result string from 'result' to a random congratulatory message
       result.text(correct[random(0, correct.length-1)]);
       sBG.backgroundColor('green');
+      wins++;
     }else{
       //sets result string from 'result' to a random failed message
       sBG.backgroundColor('red');
@@ -327,6 +341,7 @@ function loadEQ(losses){
       //sets result string from 'result' to a random congratulatory message
       result.text(correct[random(0, correct.length-1)]);
       sBG.backgroundColor('green');
+      wins++;
     }else{
       //sets result string from 'result' to a random failed message
       sBG.backgroundColor('red');
@@ -344,27 +359,21 @@ function loadEQ(losses){
   //remove splash window when select is pressed
   splash.on('click', 'select', function(e) {
     splash.hide();
-  });
-  var lossTEST;
-  console.log('Loss number');
-  lossTEST = lossToString(losses);
-  console.log(lossTEST);
-  
-
-  if(losses != 3){
-    console.log('im looping, youre not crazy');
-    wind.hide();
-    loadEQ(losses);
-  }
-  else {
-    //go to gameover screen TBC
-    gameOver.add(sBG);
-    mainText.text('u lose lOL!!1');
-    gameOver.add(mainText);
-  }
-  
-}
-
+    if(losses != 3){
+      wind.hide();
+      loadEQ(losses, wins);
+    }
+    else {
+      //go to gameover screen TBC
+      gameOver.add(sBG);
+      gO.text('Game Over! You had ' + wins + 'right answers!');
+      gameOver.add(gO);
+      splash.hide();
+      wind.hide();
+      gameOver.show();
+    }
+  });  
+}//End loadEQ
 
 /*Main Program*************************************************************************************************************/
 //User greeted with start screen
@@ -385,7 +394,8 @@ main.show();
 main.on('click', 'select', function(e) {
 //Sets losses to 0  
 losses = 0;
-loadEQ(losses);
+wins = 0;
+loadEQ(losses, wins);
   
 });//end main
 
