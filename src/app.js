@@ -101,9 +101,9 @@ var wind = new UI.Window({
   fullscreen: true,
   action: {
     //need to put images here
-    up: '',
-    down: '',
-    select: '',
+    up: 'images/a_action.png',
+    down: 'images/c_action.png',
+    select: 'images/b_action.png',
     backgroundColor: 'white'
   }
 });
@@ -163,10 +163,10 @@ var textfield = new UI.Text({
 //Text containing the correct/incorrect string (displayed on splash screen)
 var result = new UI.Text({
   position: new Vector2(0, 65),
-  size: new Vector2(200, 30),
+  size: new Vector2(130, 30),
   font: 'gothic-24-bold',
   text: '',
-  textAlign: 'center'
+  textAlign: 'left'
 });
 
 /*Functions********************************************************************************/
@@ -285,6 +285,7 @@ function loadEQ(losses){
       sBG.backgroundColor('green');
     }else{
       //sets result string from 'result' to a random failed message
+      sBG.backgroundColor('red');
       Vibe.vibrate('short');
       losses++;
       lossText.text(lossToString(losses));
@@ -295,6 +296,9 @@ function loadEQ(losses){
     splash.add(result);
     splash.add(lossText);
     splash.show();
+      wind.on('click', 'select', function(e) {
+        splash.hide();
+    });
   });
 
   //If user selects 2nd answer 'SELECT'
@@ -303,8 +307,10 @@ function loadEQ(losses){
     if(checkAns(answers, 1, equation.options.a1)){
       //sets result string from 'result' to a random congratulatory message
       result.text(correct[random(0, correct.length-1)]);
+      sBG.backgroundColor('green');
     }else{
       //sets result string from 'result' to a random failed message
+      sBG.backgroundColor('red');
       Vibe.vibrate('short');
       losses++;
       lossText.text(lossToString(losses));
@@ -314,6 +320,9 @@ function loadEQ(losses){
     splash.add(result);
     splash.add(lossText);
     splash.show();
+      wind.on('click', 'select', function(e) {
+        splash.hide();
+    });
   });
 
   //If user selects 3rd answer 'dOWN'
@@ -322,8 +331,10 @@ function loadEQ(losses){
     if(checkAns(answers, 2, equation.options.a1)){
       //sets result string from 'result' to a random congratulatory message
       result.text(correct[random(0, correct.length-1)]);
+      sBG.backgroundColor('green');
     }else{
       //sets result string from 'result' to a random failed message
+      sBG.backgroundColor('red');
       Vibe.vibrate('short');
       losses++;
       lossText.text(lossToString(losses));
@@ -333,20 +344,29 @@ function loadEQ(losses){
     splash.add(result);
     splash.add(lossText);
     splash.show();
+      wind.on('click', 'select', function(e) {
+        splash.hide();
+    });
   });
   
-  //SHOULD remove splash window when select is pressed
-  wind.on('click', 'select', function(e) {
-    splash.hide();
-  });
+//   //SHOULD remove splash window when select is pressed
+//   wind.on('click', 'select', function(e) {
+//     splash.hide();
+//   });
   
-  if(losses >= 3){
-  //go to gameover screen TBC
-    gameOver.add(sBG);
-    mainText.text('u lose lOL!!1');
-    gameOver.add(mainText);
-  }
-  loadEQ(losses);
+  console.log('Losses...');
+  console.log(losses);
+  
+//   if(losses == 3){
+//   //go to gameover screen TBC
+//     gameOver.add(sBG);
+//     mainText.text('u lose lOL!!1');
+//     gameOver.add(mainText);
+//   }
+//   else {
+//     wind.hide();
+//     loadEQ(losses);
+//   }
   
 }
 
