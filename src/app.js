@@ -166,7 +166,7 @@ var ansC = new UI.Text({
 var textfield = new UI.Text({
   position: new Vector2(0, 0),
   size: new Vector2(200, 30),
-  font: 'gothic-24-bold',
+  font: 'bitham-30-black',
   text: '',
   textAlign: 'left'
 });
@@ -225,7 +225,7 @@ function generateEquation(){
   }
   var equation = {
     //Creates a string out of the equation
-    stringify : '' + a + mathOperators[o] + b + '=' + '___',
+    stringify : '' + a + mathOperators[o] + b + '=' + '__',
     first : a,
     second : b,
     operator: o,
@@ -262,8 +262,62 @@ function shuffle(array) {
   return array;
 }
 
+function handleAnswer(i) {
+  //checks to see if answers[0] = correct answer
+  if(checkAns(answers, i, equation.options.a1)){
+    //sets result string from 'result' to a random congratulatory message
+    result.text(correct[random(0, correct.length-1)]);
+    sBG.backgroundColor('green');
+    wins++;
+  }else{
+    //sets result string from 'result' to a random failed message
+    sBG.backgroundColor('red');
+    Vibe.vibrate('short');
+    losses++;
+    lossText.text(lossToString(losses));
+    result.text(incorrect[random(0, incorrect.length-1)]);
+  }
+  //adds the result text to splash screen and shows splash screen
+  splash.add(sBG);
+  splash.add(result);
+  splash.add(lossText);
+  splash.show();
+}
+
+wind.on('click', 'up', function() {
+  handleAnswer(0);
+});
+
+wind.on('click', 'select', function() {
+  handleAnswer(1);
+});
+
+wind.on('click', 'down', function() {
+  handleAnswer(2);
+});
+
+//remove splash window when select is pressed
+splash.on('click', 'select', function(e) {
+  splash.hide();
+  if(losses != 3){
+    loadEQ(losses, wins);
+  }
+  else {
+    //go to gameover screen TBC
+    gameOver.add(sBG);
+    gO.text('Game Over! You had ' + wins + ' right answers!');
+    gameOver.add(gO);
+    splash.hide();
+    wind.hide();
+    gameOver.show();
+    losses = 0;
+    wins = 0;
+  }
+}); 
+
 //recursively loops program until 3 losses
 function loadEQ(losses, wins){
+  console.log('loadEQ');
   //Generates a random equation
   equation = generateEquation();
   //Generates answers to equation above, stores in array
@@ -283,97 +337,7 @@ function loadEQ(losses, wins){
   wind.add(ansA);
   wind.add(ansB);
   wind.add(ansC);
-  wind.show();
-
-  //should make this an if/else because it assumes the buttons will be pressed regardless******************
-  //If user selects first answer 'UP'
-  wind.on('click', 'up', function(e) {
-    //checks to see if answers[0] = correct answer
-    if(checkAns(answers, 0, equation.options.a1)){
-      //sets result string from 'result' to a random congratulatory message
-      result.text(correct[random(0, correct.length-1)]);
-      sBG.backgroundColor('green');
-      wins++;
-    }else{
-      //sets result string from 'result' to a random failed message
-      sBG.backgroundColor('red');
-      Vibe.vibrate('short');
-      losses++;
-      lossText.text(lossToString(losses));
-      result.text(incorrect[random(0, incorrect.length-1)]);
-    }
-    //adds the result text to splash screen and shows splash screen
-    splash.add(sBG);
-    splash.add(result);
-    splash.add(lossText);
-    splash.show();
-
-  });
-
-  //If user selects 2nd answer 'SELECT'
-  wind.on('click', 'select', function(e) {
-    //checks to see if answers[1] = correct answer
-    if(checkAns(answers, 1, equation.options.a1)){
-      //sets result string from 'result' to a random congratulatory message
-      result.text(correct[random(0, correct.length-1)]);
-      sBG.backgroundColor('green');
-      wins++;
-    }else{
-      //sets result string from 'result' to a random failed message
-      sBG.backgroundColor('red');
-      Vibe.vibrate('short');
-      losses++;
-      lossText.text(lossToString(losses));
-      result.text(incorrect[random(0, incorrect.length-1)]);
-    }
-    //adds the result text to splash screen and shows splash screen
-    splash.add(sBG);
-    splash.add(result);
-    splash.add(lossText);
-    splash.show();
-
-  });
-
-  //If user selects 3rd answer 'dOWN'
-  wind.on('click', 'down', function(e) {
-    //checks to see if answers[2] = correct answer
-    if(checkAns(answers, 2, equation.options.a1)){
-      //sets result string from 'result' to a random congratulatory message
-      result.text(correct[random(0, correct.length-1)]);
-      sBG.backgroundColor('green');
-      wins++;
-    }else{
-      //sets result string from 'result' to a random failed message
-      sBG.backgroundColor('red');
-      Vibe.vibrate('short');
-      losses++;
-      lossText.text(lossToString(losses));
-      result.text(incorrect[random(0, incorrect.length-1)]);
-    }
-    //adds the result text to splash screen and shows splash screen
-    splash.add(sBG);
-    splash.add(result);
-    splash.add(lossText);
-    splash.show();
-  });
-  
-  //remove splash window when select is pressed
-  splash.on('click', 'select', function(e) {
-    splash.hide();
-    if(losses != 3){
-      //wind.hide();
-      loadEQ(losses, wins);
-    }
-    else {
-      //go to gameover screen TBC
-      gameOver.add(sBG);
-      gO.text('Game Over! You had ' + wins + ' right answers!');
-      gameOver.add(gO);
-      splash.hide();
-      wind.hide();
-      gameOver.show();
-    }
-  });  
+  wind.show();   
 }//End loadEQ
 
 /*Main Program*************************************************************************************************************/
