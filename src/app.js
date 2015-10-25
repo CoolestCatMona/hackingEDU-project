@@ -85,10 +85,10 @@ var circle7 = new UI.Circle({
 });
 
 var mainText = new UI.Text({
-  position: new Vector2(50, 50),
+  position: new Vector2(40, 60),
   size: new Vector2(100, 100),
   font: 'bitham-30-black',
-  text: 'Cole is gay :^)',
+  text: 'Dail EQs',
   textAlign: 'center'
 });
 //MAIN - todo
@@ -129,8 +129,8 @@ var gO = new UI.Text({
 });
 //Text containing game over text
 var lossText = new UI.Text({
-  position: new Vector2(0, 0),
-  size: new Vector2(0, 65),
+  position: new Vector2(0, 120),
+  size: new Vector2(100, 30),
   font: 'gothic-24-bold',
   text: '',
   textAlign: 'left'
@@ -186,7 +186,7 @@ var result = new UI.Text({
 function random(min, max){
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
-//Displays losses as strikes 'X'
+//Displays losses out of 3
 function lossToString(losses){
   lossString = losses + '/3 Failures';
   return lossString;
@@ -235,7 +235,7 @@ function generateEquation(){
       a1 : c,                           //The correct answer
       a2 : c + randomNonZero(-3, 3),    // c +- 3
       //Add a check to make sure a3 != a2
-      a3 : c + randomNonZero(-3, 3)     //c +- 3 & != a2
+      a3 : c + randomNonZero(-4, 4)     //c +- 3 & != a2
       }
   };
   return equation;
@@ -349,8 +349,9 @@ function loadEQ(losses, wins){
       losses++;
       lossText.text(lossToString(losses));
       result.text(incorrect[random(0, incorrect.length-1)]);
-    }splash.add(lossText);
+    }
     //adds the result text to splash screen and shows splash screen
+    splash.add(sBG);
     splash.add(result);
     splash.add(lossText);
     splash.show();
@@ -360,13 +361,13 @@ function loadEQ(losses, wins){
   splash.on('click', 'select', function(e) {
     splash.hide();
     if(losses != 3){
-      wind.hide();
+      //wind.hide();
       loadEQ(losses, wins);
     }
     else {
       //go to gameover screen TBC
       gameOver.add(sBG);
-      gO.text('Game Over! You had ' + wins + 'right answers!');
+      gO.text('Game Over! You had ' + wins + ' right answers!');
       gameOver.add(gO);
       splash.hide();
       wind.hide();

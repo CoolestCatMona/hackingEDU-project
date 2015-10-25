@@ -4,7 +4,7 @@
         ""
     ],
     "companyName": "hi.imsean@yahoo.com",
-    "longName": "We have a CMPE16 midterm on monday",
+    "longName": "Daily Equations",
     "projectType": "pebblejs",
     "resources": {
         "media": [
@@ -52,7 +52,7 @@
         ]
     },
     "sdkVersion": "3",
-    "shortName": "Math",
+    "shortName": "DailEQs",
     "targetPlatforms": [
         "aplite",
         "basalt"
