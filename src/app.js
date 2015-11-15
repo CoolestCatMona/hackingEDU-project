@@ -11,9 +11,9 @@ var losses = 0;                      //Tracks losses, game should end on 3 losse
 var wins = 0;
 var lossString = ' ';
 var correct = ['Yeah!',              //Different win messages
-               'That is right!', 'Awesome!', 'Correct', '<(^-^<)', '^(^-^)^', '(>^-^)>', 'Pretty good', 'Way2Go!', 'U R ∞ Good', 'Niice', '¯\_(ツ)_/¯'];  
+               'That is right!', 'Awesome!', 'Correct', '<(^-^<)', '^(^-^)^', '(>^-^)>', 'Pretty good', 'Way2Go!', 'U R ∞ Good', 'Niice'];  
 var incorrect = ['No',               //Different lose messages
-                 'Thats not it', 'Try harder!', 'Not quite', ':(', ':""(', 'Incorrect', 'Try again', '↓↓↓', 'Dont give up!', 'Have you slept?', '¯\_(ツ)_/¯', 'Ur Learning!'];    
+                 'Thats not it', 'Keep Trying!', 'Not quite', ':(', ':""(', 'Incorrect', 'Try again', 'Dont give up!', 'Have you slept?', 'Ur Learning!'];    
 //Initializes random equation
 var equation = '';
 //Generates answers to equation above, stores in array
