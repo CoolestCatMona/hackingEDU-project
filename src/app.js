@@ -1,5 +1,15 @@
-/*Takes a long time to compile and infinite loops, doesnt go past main screen? *HELP**/
-/*Variables**********************************************************************************************************/
+/*****************************************/
+              /* DailEQs */
+/*****************************************/
+/* Originally produced at HackingEdu 2015*/
+/* by */
+/* Sean Dougher */
+/* Michael Gates */
+/* Cole Boyer */
+/* Moises Martinez */
+
+
+/********************************************Variables*********************************************************/
 
 var UI = require('ui');              //Default
 var Vector2 = require('vector2');    //Default
