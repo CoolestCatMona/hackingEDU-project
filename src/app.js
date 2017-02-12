@@ -372,7 +372,7 @@ losses = 0;
 wins = 0;
 loadEQ(losses, wins);
   
-});//end main
+});//end main - we did it guys. Best Pebble App @ HackingEdu 2015.
 
 
 
